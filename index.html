@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12372a">
+  <meta name="description" content="A simple, transparent FIRE calculator for financial independence and early retirement planning.">
+  <title>FIREPath — Financial Independence Planner</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="FIREPath home"><span class="brand-mark">F</span><span>FIRE<span class="brand-light">Path</span></span></a>
+    <nav><a href="#calculator">Calculator</a><a href="#how-it-works">How it works</a><button class="btn btn-outline" id="shareBtn">Share plan</button></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="dot"></span> YOUR FINANCIAL INDEPENDENCE PLAN</div>
+        <h1>Make your money<br><span>buy back your time.</span></h1>
+        <p>Explore when work could become optional. Adjust your investments, lifestyle, and assumptions to build a plan that fits your life.</p>
+        <a class="btn btn-primary" href="#calculator">Build my FIRE plan <span aria-hidden="true">↘</span></a>
+        <div class="hero-note"><span aria-hidden="true">✓</span> Private by default · No account required</div>
+      </div>
+      <div class="hero-art" aria-label="Illustration of a growing investment portfolio">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="sun"></div>
+        <div class="chart-card">
+          <div class="chart-card-top"><span>PORTFOLIO OUTLOOK</span><span class="live-dot"></span></div>
+          <div class="chart-amount" id="heroCorpus">₹—</div>
+          <div class="chart-caption">Illustrative future value</div>
+          <svg viewBox="0 0 360 130" role="img" aria-label="Illustrative upward portfolio chart">
+            <defs><linearGradient id="areaFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#79c7a0" stop-opacity=".34"/><stop offset="100%" stop-color="#79c7a0" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,112 C35,108 44,94 72,99 S111,77 140,82 S183,52 211,62 S260,28 286,40 S326,12 360,7 L360,130 L0,130 Z" fill="url(#areaFill)"/>
+            <path d="M0,112 C35,108 44,94 72,99 S111,77 140,82 S183,52 211,62 S260,28 286,40 S326,12 360,7" fill="none" stroke="#79c7a0" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="360" cy="7" r="5" fill="#d9f4e5" stroke="#27734f" stroke-width="2"/>
+          </svg>
+          <div class="chart-years"><span>Today</span><span>Along the way</span><span>Goal</span></div>
+        </div>
+        <div class="floating-note"><span class="note-icon">↗</span><div><strong>Small steps add up</strong><small>Build your plan, your way</small></div></div>
+        <div class="plant plant-a"><i></i><i></i><i></i><b></b></div>
+        <div class="plant plant-b"><i></i><i></i><b></b></div>
+      </div>
+    </section>
+
+    <section class="section" id="calculator">
+      <div class="section-heading">
+        <div><div class="eyebrow">YOUR NUMBERS, YOUR FUTURE</div><h2>Build your FIRE plan</h2></div>
+        <p>Start with estimates. You can refine them as your life and goals change.</p>
+      </div>
+      <div class="planner-grid">
+        <form class="input-panel" id="fireForm">
+          <div class="panel-head"><div><span class="step">01</span><h3>Your starting point</h3></div><button type="button" class="text-btn" id="resetBtn">Reset</button></div>
+          <div class="field-grid">
+            <label class="field"><span>Current age</span><div class="input-wrap"><input id="age" type="number" min="18" max="80" value="36" required><span>years</span></div></label>
+            <label class="field"><span>Target retirement age</span><div class="input-wrap"><input id="retireAge" type="number" min="19" max="100" value="60" required><span>years</span></div></label>
+            <label class="field"><span>Current investable assets</span><div class="input-wrap money"><span>₹</span><input id="assets" type="number" min="0" step="50000" value="5000000" required></div><small>Exclude your home and assets earmarked for other goals.</small></label>
+            <label class="field"><span>Monthly take-home income</span><div class="input-wrap money"><span>₹</span><input id="income" type="number" min="0" step="1000" value="100000"></div></label>
+          </div>
+          <div class="panel-head panel-head-spaced"><div><span class="step">02</span><h3>Retirement lifestyle</h3></div></div>
+          <div class="field-grid">
+            <label class="field"><span>Monthly retirement expenses (today's money)</span><div class="input-wrap money"><span>₹</span><input id="expenses" type="number" min="0" step="1000" value="80200" required></div><small>Include healthcare, travel, upkeep and lifestyle.</small></label>
+            <label class="field"><span>Withdrawal rate</span><div class="input-wrap"><input id="swr" type="number" min="1" max="6" step="0.25" value="3.5" required><span>% / year</span></div><small>Lower rates provide a larger safety margin.</small></label>
+          </div>
+          <div class="panel-head panel-head-spaced"><div><span class="step">03</span><h3>Investment strategy</h3></div></div>
+          <div class="field-grid">
+            <label class="field"><span>Monthly investment today</span><div class="input-wrap money"><span>₹</span><input id="monthly" type="number" min="0" step="1000" value="65000" required></div></label>
+            <label class="field"><span>Annual investment increase</span><div class="input-wrap"><input id="stepup" type="number" min="0" max="50" step="1" value="5" required><span>% / year</span></div></label>
+            <label class="field"><span>Expected annual return (nominal)</span><div class="input-wrap"><input id="return" type="number" min="0" max="25" step="0.5" value="10" required><span>% / year</span></div></label>
+            <label class="field"><span>Expected annual inflation</span><div class="input-wrap"><input id="inflation" type="number" min="0" max="15" step="0.5" value="6" required><span>% / year</span></div></label>
+          </div>
+          <div class="panel-head panel-head-spaced"><div><span class="step">04</span><h3>Other goals</h3></div><span class="optional">Optional, but important</span></div>
+          <label class="toggle-row"><span><strong>Plan separately for children's education</strong><small>Education savings are not counted as retirement assets.</small></span><input id="educationOn" type="checkbox" checked><i class="toggle"></i></label>
+          <div class="field-grid" id="educationFields">
+            <label class="field"><span>Education goal (today's total value)</span><div class="input-wrap money"><span>₹</span><input id="educationGoal" type="number" min="0" step="100000" value="15000000"></div><small>Estimate for all children, in today's rupees.</small></label>
+            <label class="field"><span>Years until education goal is needed</span><div class="input-wrap"><input id="educationYears" type="number" min="1" max="30" value="15"><span>years</span></div></label>
+          </div>
+          <div class="form-actions"><button class="btn btn-primary" type="submit">Calculate my plan <span>→</span></button><button class="btn btn-secondary" type="button" id="downloadBtn">Download report</button></div>
+          <p class="form-error" id="formError" role="alert"></p>
+        </form>
+
+        <aside class="results-panel" aria-live="polite">
+          <div class="results-top"><span class="results-kicker">YOUR FIRE SNAPSHOT</span><span class="status-pill" id="statusPill">Calculating</span></div>
+          <div class="result-primary"><span id="resultLabel">Target retirement age</span><div class="big-number" id="resultAge">—</div><p id="resultSub">Estimated result based on your assumptions</p></div>
+          <div class="result-metrics">
+            <div><span>FIRE target at retirement</span><strong id="targetValue">—</strong></div>
+            <div><span>Projected portfolio</span><strong id="corpusValue">—</strong></div>
+            <div><span>Monthly investment needed*</span><strong id="neededValue">—</strong></div>
+            <div><span>Target gap / surplus</span><strong id="gapValue">—</strong></div>
+          </div>
+          <div class="chart-section"><div class="chart-title"><strong>Portfolio vs FIRE target</strong><span>Nominal ₹</span></div><canvas id="projectionChart" width="620" height="270" aria-label="Chart comparing projected portfolio and FIRE target" role="img"></canvas><div class="legend"><span><i class="legend-portfolio"></i>Projected portfolio</span><span><i class="legend-target"></i>FIRE target</span></div></div>
+          <div class="result-insight" id="insightBox"><span class="insight-icon">✦</span><p>Update your assumptions to explore your options.</p></div>
+          <p class="footnote">*The monthly investment estimate is the starting amount today, assuming the annual step-up you selected. This is a planning illustration, not a prediction.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section how-section" id="how-it-works">
+      <div class="eyebrow">UNDERSTAND THE MATH</div><h2>Simple assumptions. Clear decisions.</h2>
+      <div class="how-grid">
+        <article><span class="how-number">01</span><h3>Set your target</h3><p>Annual retirement expenses divided by your chosen withdrawal rate gives an initial target in today's money.</p></article>
+        <article><span class="how-number">02</span><h3>Account for inflation</h3><p>Your future target grows with inflation. The same lifestyle generally costs more in future rupees.</p></article>
+        <article><span class="how-number">03</span><h3>Stress-test the plan</h3><p>Try lower returns, higher inflation, and a lower withdrawal rate. Markets do not deliver smooth returns every year.</p></article>
+      </div>
+      <div class="method-note"><strong>Important methodology note</strong><p>This tool uses a constant-return model for illustration. Real portfolios have volatility, taxes, fees, sequence-of-returns risk, and changing spending. Education goals are shown separately and are not deducted from the FIRE target. Get qualified advice before making major financial decisions.</p></div>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="#"><span class="brand-mark">F</span><span>FIRE<span class="brand-light">Path</span></span></a><span>Plan thoughtfully. Live intentionally.</span><span>Educational tool · Not financial advice</span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

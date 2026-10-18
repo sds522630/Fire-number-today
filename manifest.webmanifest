@@ -1,0 +1,1 @@
+{"name":"FIREPath — FIRE Number Today","short_name":"FIRE Today","description":"Calculate a FIRE number from today's household expenses.","start_url":"./","display":"standalone","background_color":"#f7faf7","theme_color":"#12372a","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
